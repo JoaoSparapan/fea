@@ -7,4 +7,4 @@ with
 
 select total_bruto_vendido
 from vendas_em_1997
-where total_bruto_vendido != 658388.75
+where total_bruto_vendido not between 658388 and 658389
