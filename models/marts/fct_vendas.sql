@@ -15,6 +15,10 @@ with
         select *
         from {{ ref('dim_clientes') }}
     )
+    , transportadoras as (
+        select *
+        from {{ ref('dim_transportadoras') }}
+    )
     , joined_tabelas as (
         select
             int_vendas.sk_pedido_item
@@ -47,6 +51,7 @@ with
             , funcionarios.dt_nascimento_funcionario
             , funcionarios.dt_contratacao
             , clientes.nome_cliente
+            , transportadoras.nome_transportadora
         from int_vendas
         left join produtos on
             int_vendas.id_produto = produtos.id_produto
@@ -54,6 +59,8 @@ with
             int_vendas.id_funcionario = funcionarios.id_funcionario
         left join clientes on
             int_vendas.id_cliente = clientes.id_cliente
+        left join transportadoras on
+            int_vendas.id_transportadora = transportadoras.id_transportadora
     )
     , transformacoes as (
         select
@@ -106,6 +113,7 @@ with
             , cargo_funcionario
             , dt_nascimento_funcionario
             , dt_contratacao
+            , nome_transportadora
         from transformacoes
     )
 select *
